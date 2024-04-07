@@ -6,10 +6,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
 
-export default function Addcar() {
+export default function Addcar(props) {
   const [open, setOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    email: ""
+  const [car, setCar] = useState({
+    brand: "", model: "", color: "", fuel: "", modelYear: "", price: ""
   });
 
   const handleClickOpen = () => {
@@ -21,19 +21,14 @@ export default function Addcar() {
   };
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+    setCar({...car, [event.target.name]: event.target.value})
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Add your logic to handle form submission here
-    console.log("Form submitted with data:", formData);
-    handleClose(); // Close the dialog after form submission
-  };
+  const addCar = () => {
+    props.saveCar(car);
+    handleClose();
+  }
+
 
   return (
     <>
@@ -41,28 +36,78 @@ export default function Addcar() {
         Add car
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <form onSubmit={handleSubmit}>
-          <DialogTitle>New car</DialogTitle>
+       
+          <DialogTitle>Add new car information
+          </DialogTitle>
           <DialogContent>
             <TextField
               autoFocus
               required
               margin="dense"
-              id="email"
-              name="email"
-              label="Email Address"
-              type="email"
               fullWidth
               variant="standard"
-              value={formData.email}
+              name="brand"
+              label="Brand"
+              value={car.brand}
+              onChange={handleChange}
+            />
+            <TextField
+              required
+              margin="dense"
+              fullWidth
+              variant="standard"
+              name="model"
+              label="Model"
+              value={car.model}
+              onChange={handleChange}
+            />
+            <TextField
+              required
+              margin="dense"
+              fullWidth
+              variant="standard"
+              name="color"
+              label="Color"
+              value={car.color}
+              onChange={handleChange}
+            />
+            <TextField
+              required
+              margin="dense"
+              fullWidth
+              variant="standard"
+              name="fuel"
+              label="Fuel"
+              value={car.fuel}
+              onChange={handleChange}
+            />
+            <TextField
+              required
+              margin="dense"
+              fullWidth
+              variant="standard"
+              name="modelYear"
+              label="Year"
+              value={car.modelYear}
+              onChange={handleChange}
+            />
+            {/* When filling price textfield in the form, the number should be whole number. */}
+            <TextField
+              required
+              margin="dense"
+              fullWidth
+              variant="standard"
+              name="price"
+              label="Price"
+              value={car.price}
               onChange={handleChange}
             />
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Save</Button>
+            <Button onClick={addCar} type="submit">Save</Button>
           </DialogActions>
-        </form>
+        
       </Dialog>
     </>
   );

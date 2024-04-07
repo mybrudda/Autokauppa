@@ -6,7 +6,7 @@ import Addcar from "./Addcar";
 
 export default function Carlist() {
   const [cars, setCars] = useState([]);
-  const [gridApi, setGridApi] = useState(null); // State to hold gridApi
+  const [gridApi, setGridApi] = useState(null); 
 
   useEffect(() => {
     fetchData();
@@ -29,13 +29,13 @@ export default function Carlist() {
   ];
 
   const onGridReady = (params) => {
-    setGridApi(params.api); // Setting gridApi when grid is ready
+    setGridApi(params.api); 
   };
 
   const handleDeleteRow = () => {
-    const selectedRows = gridApi.getSelectedRows(); // Get selected rows
+    const selectedRows = gridApi.getSelectedRows(); 
     if (selectedRows.length === 1) {
-      const carId = selectedRows[0]._links.self.href.split("/").pop(); // Extract car ID from self.href
+      const carId = selectedRows[0]._links.self.href.split("/").pop(); 
       fetch(`https://carrestservice-carshop.rahtiapp.fi/cars/${carId}`, {
         method: "DELETE",
       })
@@ -53,14 +53,28 @@ export default function Carlist() {
     }
   };
 
+  const saveCar = (car) => {
+    
+    fetch('https://carrestservice-carshop.rahtiapp.fi/cars', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(car)
+    })
+    .then(res => fetchData())
+    .catch(err => console.error(err));
+}
+
+
   return (
     <div>
       <div style={{ margin: "20px" }}>
-        <Addcar />
+        <Addcar saveCar={saveCar}/>
       </div>
       <div
         className="ag-theme-material"
-        style={{ height: "500px", width: "1100px" }}
+        style={{ height: "500px", width: "1050px" }}
       >
         <div style={{ margin: "20px" }}>
           <button className="lightButton" onClick={handleDeleteRow}>
