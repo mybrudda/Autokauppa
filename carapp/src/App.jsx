@@ -12,14 +12,14 @@ function App() {
       <AppBar position="fixed" style={{ height: '70px' }}> 
         <Toolbar style={{ justifyContent: 'center' }}> 
           <Typography variant="h4" component="div">
-            CarShop
+            AutoKauppa
           </Typography>
         </Toolbar>
       </AppBar>
       
       <Toolbar />
       
-      <div style={{ marginBottom: '40%' }}> {/* Adding margin-top to position Carlist higher */}
+      <div style={{ marginBottom: '45%' }}> 
         <Carlist />
       </div>
     </>
