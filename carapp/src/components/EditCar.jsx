@@ -6,16 +6,24 @@ import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
 
-export default function Addcar(props) {
+export default function EditCar(props) {
   const [open, setOpen] = useState(false);
   const [car, setCar] = useState({
     brand: "", model: "", color: "", fuel: "", modelYear: "", price: ""
   });
 
   const handleClickOpen = () => {
+    console.log(props.car);
+    setCar({
+      brand: props.car.brand,
+      model: props.car.model,
+      color: props.car.color,
+      fuel: props.car.fuel,
+      modelYear: props.car.modelYear,
+      price: props.car.price
+    });
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -24,8 +32,8 @@ export default function Addcar(props) {
     setCar({...car, [event.target.name]: event.target.value})
   };
 
-  const addCar = () => {
-    props.saveCar(car);
+  const updateCar = () => {
+    props.updateCar(car, props.car._links.car.href);
     handleClose();
   }
 
@@ -33,11 +41,11 @@ export default function Addcar(props) {
   return (
     <>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Add car
+        Edit
       </Button>
       <Dialog open={open} onClose={handleClose}>
        
-          <DialogTitle>Add Information
+          <DialogTitle>Edit Information
           </DialogTitle>
           <DialogContent>
             <TextField
@@ -105,7 +113,7 @@ export default function Addcar(props) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={addCar} type="submit">Save</Button>
+            <Button onClick={updateCar} type="submit">Save</Button>
           </DialogActions>
         
       </Dialog>
