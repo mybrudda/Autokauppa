@@ -37,7 +37,7 @@ export default function Addcar(props) {
       </Button>
       <Dialog open={open} onClose={handleClose}>
        
-          <DialogTitle>Add Information
+          <DialogTitle>Add new car information
           </DialogTitle>
           <DialogContent>
             <TextField
